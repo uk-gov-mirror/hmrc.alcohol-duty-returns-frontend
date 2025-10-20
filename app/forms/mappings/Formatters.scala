@@ -53,7 +53,7 @@ trait Formatters {
       override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], BigDecimal] =
         baseFormatter
           .bind(key, data)
-          .map(_.replace(",", ""))
+          .map(_.replace(",", "").replaceAll("\\s", ""))
           .flatMap { s =>
             nonFatalCatch
               .either(BigDecimal(s))
@@ -104,7 +104,7 @@ trait Formatters {
       override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Int] =
         baseFormatter
           .bind(key, data)
-          .map(_.replace(",", ""))
+          .map(_.replace(",", "").replaceAll("\\s", ""))
           .flatMap {
             case s if s.matches(decimalRegexp) =>
               Left(Seq(FormError(key, wholeNumberKey, args)))
