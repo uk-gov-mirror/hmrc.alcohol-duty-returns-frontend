@@ -34,7 +34,7 @@ object SpiritTypeSummary {
 
       val value = ValueViewModel(HtmlContent(s"""<span aria-label=${messages(
         "spiritType.checkYourAnswersLabel"
-      )}">${rowValue.mkString(",<br>")}</span>"""))
+      )}"><span class='break'>${rowValue.mkString(",</span><span class='break'>")}</span>"""))
 
       Some(
         SummaryListRowViewModel(
