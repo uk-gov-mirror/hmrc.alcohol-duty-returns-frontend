@@ -31,7 +31,11 @@ class AdjustmentVolumeSummarySpec extends SpecBase {
       adjustmentVolumeSummary.row(adjustmentEntry) mustBe Some(
         SummaryListRow(
           Key(Text("Volume")),
-          Value(HtmlContent("12.20 litres<br/>1.2000 litres of pure alcohol")),
+          Value(
+            HtmlContent(
+              "<span class='break'>12.20 litres</span><span class='break'>1.2000 litres of pure alcohol</span>"
+            )
+          ),
           "",
           Some(
             Actions(items =
