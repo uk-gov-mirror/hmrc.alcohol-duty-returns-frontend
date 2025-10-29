@@ -1,5 +1,5 @@
-/*
- * Copyright 2024 HM Revenue & Customs
+@*
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,22 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package viewmodels
+@import config.Constants.Css
 
-import play.api.i18n.Messages
+@this()
 
-object Money {
-  private val minus: Char = 0x2212
+@(id: String, text: String, href: String, visuallyHiddenContent: String, newTab: Boolean = false, classes: String = Css.linkNoVisitedStateCssClass)
 
-  /** Note: This is intended to work with values that are already to 2dp. The rounding rules for tax may be up or down
-    * depending on the context and this code will round to nearest.
-    */
-  def format(amount: BigDecimal)(implicit messages: Messages): String =
-    if (amount < 0) {
-      s"$minus${messages("site.currency.2DP", amount.abs)}"
-    } else {
-      messages("site.currency.2DP", amount)
-    }
-}
+<a class="@classes" href="@href" @if(newTab) { target="_blank" rel="noopener noreferrer" } id="@id">@text<span class="@Css.visuallyHiddenCssClass">@visuallyHiddenContent</span></a>

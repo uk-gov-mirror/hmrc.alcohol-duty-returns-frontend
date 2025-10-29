@@ -25,6 +25,7 @@ import play.api.http.Status.OK
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReadsInstances, HttpResponse, StringContextOps, UpstreamErrorResponse}
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
 
 import java.time.YearMonth
 import javax.inject.Inject
@@ -56,10 +57,10 @@ class AlcoholDutyCalculatorConnector @Inject() (
     httpClient
       .get(url"${config.adrCalculatorRateBandUrl()}?$queryParams")
       .execute[Either[UpstreamErrorResponse, HttpResponse]]
-      .map({
+      .map {
         case Right(response) if response.status == OK => response.json.asOpt[RateBand]
         case _                                        => None
-      })
+      }
   }
 
   def rateBands(ratePeriodsAndTaxCodes: Seq[(YearMonth, String)])(implicit
@@ -74,10 +75,10 @@ class AlcoholDutyCalculatorConnector @Inject() (
     httpClient
       .get(url"${config.adrCalculatorRateBandsUrl()}?$queryParams")
       .execute[Either[UpstreamErrorResponse, HttpResponse]]
-      .map({
+      .map {
         case Right(response) if response.status == OK => response.json.as[Seq[((YearMonth, String), RateBand)]].toMap
         case _                                        => Map.empty
-      })
+      }
   }
 
   def calculateTotalDuty(requestBody: TotalDutyCalculationRequest)(implicit

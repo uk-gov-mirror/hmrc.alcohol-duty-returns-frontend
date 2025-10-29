@@ -5,7 +5,7 @@ import uk.gov.hmrc.DefaultBuildSettings
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "3.3.6"
 
 lazy val appName: String = "alcohol-duty-returns-frontend"
 
@@ -36,12 +36,11 @@ lazy val root = Project(appName, file("."))
     ScoverageKeys.coverageMinimumStmtTotal := 97,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
-    scalacOptions ++= Seq(
+    scalacOptions ++= List(
       "-feature",
-      "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s",
-      "-deprecation",
-      "-Ypatmat-exhaust-depth",
-      "40"
+      "-Wconf:msg=unused import&src=conf/.*:s",
+      "-Wconf:msg=unused import&src=views/.*:s",
+      "-Wconf:src=routes/.*:s"
     ),
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
